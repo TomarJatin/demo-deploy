@@ -17,8 +17,8 @@ jobs:
 
     - name: Create Vercel Project
       run: |
-        PROJECT_ID=$(vercel projects add ${{ github.event.repository.name }} --org ${{ secrets.VERCEL_ORG_ID }} --token=${{ secrets.VERCEL_TOKEN }} --root=./path/to/next.js/project --json | jq '.projectId' --raw-output)
+        PROJECT_ID=$(vercel projects add ${{ github.event.repository.name }} ${{ secrets.VERCEL_ORG_ID }} --token=${{ secrets.VERCEL_TOKEN }} --root=./path/to/next.js/project --json | jq '.projectId' --raw-output)
         echo "VERCEL_PROJECT_ID=$PROJECT_ID" >> $GITHUB_ENV
 
     - name: Deploy Project to Vercel
-      run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --project=${{ env.VERCEL_PROJECT_ID }}
+      run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} -p ${{ env.VERCEL_PROJECT_ID }}
